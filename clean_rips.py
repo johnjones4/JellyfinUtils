@@ -11,6 +11,7 @@ for f in os.listdir(ROOT_DIR):
         if len(f1) == 1 and f1[0].endswith('.mkv'):
             old_path = os.path.join(subdir, f1[0])
             new_path = os.path.join(ROOT_DIR, f"{f}.mkv")
-            print(old_path, new_path)
+            print(f1[0])
+            os.rename(old_path, new_path)
         else:
             print(f"Directory {subdir} has unexpected number of files")
