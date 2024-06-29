@@ -22,14 +22,21 @@ with open("./unidentified.csv", "r") as file2:
                 'id': id,
                 'tmdb': results[0]['id']
             })
+        else:
+            found.append({
+                'name': name,
+                'id': id,
+                'tmdb': None
+            })
 
 enriched = list()
 for item in found:
-    movie = requests.get("https://api.themoviedb.org/3/movie/" + str(item['tmdb']), params={"language": "en-US"}, headers=AUTH_HEADERS).json()
-    if movie['belongs_to_collection']:
-        item['tmdbCollection'] = movie['belongs_to_collection']['id']
-    if movie['imdb_id']:
-        item['imdb'] = movie['imdb_id']
+    if item['tmdb']:
+        movie = requests.get("https://api.themoviedb.org/3/movie/" + str(item['tmdb']), params={"language": "en-US"}, headers=AUTH_HEADERS).json()
+        if movie['belongs_to_collection']:
+            item['tmdbCollection'] = movie['belongs_to_collection']['id']
+        if movie['imdb_id']:
+            item['imdb'] = movie['imdb_id']
     enriched.append(item)
 
 with open("./identified.csv", "w") as file1:

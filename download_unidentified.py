@@ -20,5 +20,5 @@ with open("./unidentified.csv", "w") as file:
         if not item['ProviderIds']:
             writer.writerow([
                 item['Id'],
-                item['Name'],
+                item['Name'].replace("_", " ").title(),
             ])
